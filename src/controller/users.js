@@ -3,6 +3,7 @@ const userModel = require('../models/users')
 const getAllUsers = async (req, res) => {
     try {
         const [data] = await userModel.getAllUsers();
+        
         res.json({
             message:'Get all users successfully',
             data:data
