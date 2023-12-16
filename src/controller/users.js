@@ -8,41 +8,65 @@ const getAllUsers = async (req, res) => {
             data:data
         }); 
     } catch (error) {
-     res.status(500).json({
+        res.status(500).json({
         message:'Server error',
         serverMessage: error.message
-     })   
+        });   
     }
 }
 
-const createUser = (req, res) => {
-    // console.log(req.body);
-    res.json({
-        message:'Create user successfully',
-        data: req.body
-    });
+const createUser = async (req, res) => {
+    const {body} = req;
+    try {
+        await userModel.createNewUsers(body)
+        res.json({
+            message:'Create user successfully',
+            data: req.body
+        });
+    } catch (error) {
+        res.status(500).json({
+            message:'Server error',
+            serverMessage: error.message
+        })   
+    }
+    
 }
 
-const updateUser = (req, res) => {
-    const {id} = req.params;
-    console.log(id);
-    res.json({
-        message:'Update user successfully',
-        data:req.body,
-    })
+const updateUser = async (req, res) => {
+    const {idUser} = req.params;
+    const {body} = req;
+    try {
+        await userModel.updateUsers(body, idUser)
+        res.json({
+            message:'Update user successfully',
+            data:{
+                id: idUser,
+                ...body,
+            },
+        })
+    } catch (error) {
+        res.status(500).json({
+            message:'Server error',
+            serverMessage: error.message
+        })   
+    }
 };
 
-const deleteUser = (req, res) => {
-    const {id} = req.params;
-    res.json({
-        message:'Delete user successfully',
-        data : {
-            id:id,
-            name: "rasyiid",
-            address: "bantul, yogyakarta",
-            email: "rasyiid@gmail.com"
-        }
-    });
+const deleteUser = async (req, res) => {
+    const {idUser} = req.params;
+    try {
+        await userModel.deleteUsers(idUser)
+        res.json({
+            message:'Delete user successfully',
+            data : null
+        });
+    } catch (error) {
+        res.status(500).json({
+            message:'Server error',
+            serverMessage: error.message
+        })   
+    }
+    
 };
 
 

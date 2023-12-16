@@ -1,6 +1,6 @@
-
+require('dotenv').config()
 const express = require('express');
-
+const PORT = process.env.PORT || 4000;
 
 const usersRouter = require('./routes/users');
 const middlewareLogRequest = require('./middleware/logs');
@@ -14,8 +14,8 @@ app.use(express.json());
 app.use('/users',usersRouter);
 
 
-app.listen(4000, ()=>{
-    console.log(`Server berhasil di running di port 4000`); 
+app.listen(PORT, ()=>{
+    console.log(`Server berhasil di running di port ${PORT}`); 
 });
 
 
